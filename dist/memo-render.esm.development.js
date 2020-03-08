@@ -5,7 +5,7 @@ var MemoRender = React.memo(function (_ref) {
   var children = _ref.children;
   return children;
 }, function (prevProps, nextProps) {
-  return !prevProps.disabled && isEqual(prevProps, nextProps);
+  return !nextProps.disabled && (nextProps.deps ? isEqual(prevProps.deps, nextProps.deps) : isEqual(prevProps, nextProps));
 });
 MemoRender.displayName = 'MemoRender';
 

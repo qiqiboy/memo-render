@@ -8,6 +8,9 @@ A react-component for optimizing performance when it's parent re-renders.
 
 * [安装](#安装)
 * [如何使用](#如何使用)
+    - [`disabled`](#disabled)
+    - [`deps`](#deps)
+    - [`children`](#children)
 * [原理](#原理)
 * [陷阱](#陷阱)
 
@@ -24,7 +27,7 @@ $ yarn add memo-render
 
 ## 如何使用
 
-`MemoRender`的使用非常简单，它只有一个可选的`disabled`属性，表示是否启用深度 props diffing 优化。除此之外，你只需要将它包裹需要优化的组件即可。
+`MemoRender`的使用非常简单，它默认情况下，你只需要将它嵌套包裹需要优化的组件节点即可。它会深度对比子节点对象的变化，以决定是否跳过react渲染。
 
 ```diff
 -   <HeavyComponent />
@@ -32,6 +35,26 @@ $ yarn add memo-render
 +       <HeavyComponent />
 +   </MemoRender>
 ```
+
+### `disabled`
+
+是否启用渲染优化
+
+### `deps`
+
+`deps`是可选的。类似`useMemo` `useCallback`等 hooks 的第二个参数，即需要进行对比的依赖项数组。如果`deps={[]}`，则表示任何情况下都不进行渲染更新。
+
+使用`deps`可以使对比更加高效。
+
+```typescript
+<MemoRender deps={[this.state.name]}>
+    <div className={this.state.name}>...</div>
+</MemoRender>
+```
+
+### `children`
+
+需要优化的组件节点
 
 ## 原理
 
@@ -81,7 +104,7 @@ function APP() {
 }
 ```
 
-正确的做法是将 `onChange` 放到组件实例（class 组件）或者适用 memoizeation 优化(function 组件、hooks):
+正确的做法是使用`deps`属性，或者创建不可变的 `onChange` 函数，例如放到组件实例（class 组件）或者适用 memoizeation 优化(function 组件、hooks):
 
 ```typescript
 /**
@@ -94,10 +117,11 @@ function APP() {
         <div>
             <MemoRender>
                 <HeavyComponent onChange={onChange} />
+                <HeavyComponent options={{ value: 'xx', onChange }} />
             </MemoRender>
 
-            <MemoRender>
-                <HeavyComponent options={{ value: 'xx', onChange }} />
+            <MemoRender deps={[]}>
+                <HeavyComponent onChange={() => {}} />
             </MemoRender>
         </div>
     );

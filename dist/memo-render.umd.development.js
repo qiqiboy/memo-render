@@ -141,7 +141,7 @@
     var children = _ref.children;
     return children;
   }, function (prevProps, nextProps) {
-    return !prevProps.disabled && _reactFastCompare_3_0_1_reactFastCompare(prevProps, nextProps);
+    return !nextProps.disabled && (nextProps.deps ? _reactFastCompare_3_0_1_reactFastCompare(prevProps.deps, nextProps.deps) : _reactFastCompare_3_0_1_reactFastCompare(prevProps, nextProps));
   });
   MemoRender.displayName = 'MemoRender';
 

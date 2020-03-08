@@ -4,9 +4,12 @@ import isEqual from 'react-fast-compare';
 const MemoRender = React.memo<{
     children: React.ReactNode;
     disabled?: boolean;
+    deps?: any[];
 }>(
     ({ children }) => children as React.ReactElement,
-    (prevProps, nextProps) => !prevProps.disabled && isEqual(prevProps, nextProps)
+    (prevProps, nextProps) =>
+        !nextProps.disabled &&
+        (nextProps.deps ? isEqual(prevProps.deps, nextProps.deps) : isEqual(prevProps, nextProps))
 );
 
 MemoRender.displayName = 'MemoRender';

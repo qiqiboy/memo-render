@@ -1,1 +1,1 @@
-import r from"react";import e from"react-fast-compare";var t=r.memo(function(r){var e=r.children;return e},function(r,t){return!r.disabled&&e(r,t)});t.displayName="MemoRender";export default t;
+import e from"react";import r from"react-fast-compare";var t=e.memo(function(e){var r=e.children;return r},function(e,t){return!t.disabled&&(t.deps?r(e.deps,t.deps):r(e,t))});t.displayName="MemoRender";export default t;
