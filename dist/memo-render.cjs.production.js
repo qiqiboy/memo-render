@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:true});function e(e){return e&&typeof e==="object"&&"default"in e?e["default"]:e}var r=require("react");var t=e(require("react-fast-compare"));var u=r.memo(function(e){var r=e.children;return r},function(e,r){return t(e,r)});u.displayName="MemoRender";exports.default=u;
