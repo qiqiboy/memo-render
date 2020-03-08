@@ -1,11 +1,11 @@
-import { memo } from 'react';
+import React from 'react';
 import isEqual from 'react-fast-compare';
 
-var MemoRender = memo(function (_ref) {
+var MemoRender = React.memo(function (_ref) {
   var children = _ref.children;
   return children;
 }, function (prevProps, nextProps) {
-  return isEqual(prevProps, nextProps);
+  return !prevProps.disabled && isEqual(prevProps, nextProps);
 });
 MemoRender.displayName = 'MemoRender';
 

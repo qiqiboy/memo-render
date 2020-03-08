@@ -2,7 +2,9 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react')) :
   typeof define === 'function' && define.amd ? define(['exports', 'react'], factory) :
   (global = global || self, factory(global.MemoRender = {}, global.React));
-}(this, (function (exports, react) { 'use strict';
+}(this, (function (exports, React) { 'use strict';
+
+  React = React && Object.prototype.hasOwnProperty.call(React, 'default') ? React['default'] : React;
 
   /* global Map:readonly, Set:readonly, ArrayBuffer:readonly */
 
@@ -135,11 +137,11 @@
     }
   };
 
-  var MemoRender = react.memo(function (_ref) {
+  var MemoRender = React.memo(function (_ref) {
     var children = _ref.children;
     return children;
   }, function (prevProps, nextProps) {
-    return _reactFastCompare_3_0_1_reactFastCompare(prevProps, nextProps);
+    return !prevProps.disabled && _reactFastCompare_3_0_1_reactFastCompare(prevProps, nextProps);
   });
   MemoRender.displayName = 'MemoRender';
 

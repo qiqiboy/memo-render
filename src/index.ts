@@ -1,11 +1,12 @@
-import { memo, ReactElement } from 'react';
+import React from 'react';
 import isEqual from 'react-fast-compare';
 
-const MemoRender = memo<{
-    children: ReactElement;
+const MemoRender = React.memo<{
+    children: React.ReactNode;
+    disabled?: boolean;
 }>(
-    ({ children }) => children,
-    (prevProps, nextProps) => isEqual(prevProps, nextProps)
+    ({ children }) => children as React.ReactElement,
+    (prevProps, nextProps) => !prevProps.disabled && isEqual(prevProps, nextProps)
 );
 
 MemoRender.displayName = 'MemoRender';
