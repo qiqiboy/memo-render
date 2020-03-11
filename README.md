@@ -64,13 +64,11 @@ $ yarn add memo-render
 
 而`MemoRender`就是用于这种优化场景，无需改造原有组件，直接将它放到需要优化的节点上层，即可达到一定的优化效果。这是因为组件传递的各种 props（包括 children），大多都是局部临时变量。对于 object 类型数据，局部临时生成，每次都是新的变量对象，这导致 react 内部的 diffing 比较不一致，持续进入下一层组件的`ceconciliation`阶段，即重复渲染。`MemoRender`正式通过深度比较`children`节点是否有变化来告诉 react 是否跳过本次渲染。
 
-感谢`react-fast-compare`，`ReactRender`借助 react 本身的`react.memo`优化技巧，通过深度比较`children`节点，来告诉 react 是否跳过本次渲染。
-
-**请注意**，这并非意味着`children`节点的组件不会运行，实际上`children`节点的组件依然会调用其`render()`方法，但是如果`render()`生成的`react elements tree`(`Virtual DOM Tree`)与上一次没有变化，则 react 会复用上一次的结果，不进入`协调(Reconciliation)`阶段。
-
-对性能影响更大的是`协调(Reconciliation)`阶段的计算处理，包括更新真实 DOM。仅仅创建`VDOM`的开销相比是可以忽略不计的。
+感谢`react-fast-compare`，`MemoRender`借助 react 本身的`react.memo`优化技巧，通过深度比较`children`节点，来告诉 react 是否跳过本次渲染。
 
 ## 陷阱
+
+> 我们准备了一篇[《高性能表单指南》](https://github.com/qiqiboy/react-formutil/issues/18)，可以了解更多
 
 首先，相信我，绝大多数情况下你都不需要`MemoRender`。
 
